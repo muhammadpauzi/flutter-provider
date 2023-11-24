@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorials/models/product.dart';
+import 'package:flutter_tutorials/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -13,50 +16,62 @@ class CartPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Row(
-                      children: [
-                        Image.network(
-                          "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                          width: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            child: Consumer<CartProvider>(
+              builder: (context, value, child) {
+                return ListView.builder(
+                    itemCount: value.cartOfProducts.length,
+                    itemBuilder: (context, index) {
+                      Product product = value.cartOfProducts[index];
+                      return ListTile(
+                        title: Row(
                           children: [
-                            const Text(
-                              "Product 1",
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
+                            Image.network(
+                              product.thumbnail,
+                              width: 100,
+                              fit: BoxFit.cover,
                             ),
-                            Text(
-                              "\$ 200",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black.withOpacity(.7),
-                                fontWeight: FontWeight.bold,
-                              ),
+                            const SizedBox(
+                              width: 10,
                             ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product.title,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                Text(
+                                  "\$${product.price}",
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.black.withOpacity(.7),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    ),
-                    trailing: IconButton(
-                      color: Colors.red,
-                      icon: const Icon(Icons.remove_shopping_cart_outlined),
-                      onPressed: () {
-                        // Implement removal logic here
-                      },
-                    ),
-                  );
-                }),
+                        ),
+                        trailing: IconButton(
+                          color: Colors.red,
+                          icon: const Icon(Icons.remove_shopping_cart_outlined),
+                          onPressed: () {
+                            Provider.of<CartProvider>(context, listen: false)
+                                .removeProductInCart(product.id);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text(
+                                  'Product successfully remove from cart!'),
+                              duration: Duration(seconds: 3),
+                            ));
+                          },
+                        ),
+                      );
+                    });
+              },
+            ),
           ),
           Container(
             width: double.infinity,

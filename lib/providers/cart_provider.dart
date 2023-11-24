@@ -18,4 +18,9 @@ class CartProvider extends ChangeNotifier {
 
     return true;
   }
+
+  void removeProductInCart(int idProduct) async {
+    cartOfProducts.removeWhere((product) => product.id == idProduct);
+    notifyListeners();
+  }
 }
