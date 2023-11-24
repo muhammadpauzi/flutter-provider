@@ -1,16 +1,5 @@
-# flutter_tutorials
+# Flutter Provider
+(LEARN PROJECT) A simple Flutter app that implements product lists, carts, infinite scroll pagination and more using Providers as State Management.
 
-A new Flutter project.
+https://github.com/muhammadpauzi/flutter-provider/assets/75721128/e4994043-4676-4dbe-8687-3d5f4b23e21b
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
